@@ -47,6 +47,10 @@ npm run dev
 
 This will start the application on `http://localhost:3000` by default. Open your browser and navigate to this URL to access the application.
 
+## Screenshots
+
+![Alt text](public/ScreenShot B.png?raw=true "Add Applicant")
+
 ## Usage
 
 ### Pages
