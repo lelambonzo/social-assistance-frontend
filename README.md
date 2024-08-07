@@ -49,7 +49,7 @@ This will start the application on `http://localhost:3000` by default. Open your
 
 ## Screenshots
 
-![Alt text](public/ScreenShot B.png?raw=true "Add Applicant")
+![ScreenShot B](https://github.com/user-attachments/assets/c432f86e-3f26-4db8-9766-cb3a02c13a1e)
 
 ## Usage
 
