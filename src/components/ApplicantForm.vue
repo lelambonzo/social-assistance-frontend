@@ -20,7 +20,7 @@
       </div>
       <div>
         <label for="sex">Sex:</label>
-        <select v-model="applicant.sexId" required>
+        <select v-model="applicant.sex.sexId" required>
           <option v-for="sex in sexes" :value="sex.sexId" :key="sex.sexId">{{ sex.sexDescription }}</option>
         </select>
       </div>
@@ -30,7 +30,7 @@
       </div>
       <div>
         <label for="maritalStatus">Marital Status:</label>
-        <select v-model="applicant.maritalStatusId" required>
+        <select v-model="applicant.maritalStatus.maritalStatusId" required>
           <option v-for="status in maritalStatuses" :value="status.maritalStatusId" :key="status.maritalStatusId">{{ status.maritalStatusDescription }}</option>
         </select>
       </div>
@@ -40,7 +40,7 @@
       </div>
       <div>
         <label for="village">Village:</label>
-        <select v-model="applicant.villageId" required>
+        <select v-model="applicant.village.villageId" required>
           <option v-for="village in villages" :value="village.villageId" :key="village.villageId">{{ village.villageName }}</option>
         </select>
       </div>
@@ -78,11 +78,11 @@ export default {
         firstName: '',
         middleName: '',
         lastName: '',
-        sexId: null,
+        sex: {sexId: null},
         age: '',
-        maritalStatusId: null,
+        maritalStatus: {maritalStatusId: null},
         idPassportNumber: '',
-        villageId: null,
+        village: {villageId: null},
         postalAddress: '',
         physicalAddress: '',
         telephoneContacts: '',
@@ -96,31 +96,34 @@ export default {
   },
   methods: {
     fetchSexes() {
-      axios.get('http://localhost:8080/api/sexes')
-        .then(response => {
-          this.sexes = response.data;
-        })
-        .catch(error => {
-          console.error('Error fetching sexes:', error);
-        });
+      // axios.get('http://localhost:8080/api/sexes')
+      //   .then(response => {
+      //     this.sexes = response.data;
+      //   })
+      //   .catch(error => {
+      //     console.error('Error fetching sexes:', error);
+      //   });
+      this.sexes = [{sexId: 1, sexDescription: "Male"}, {sexId: 2, sexDescription: "Female"}]
     },
     fetchMaritalStatuses() {
-      axios.get('http://localhost:8080/api/marital-statuses')
-        .then(response => {
-          this.maritalStatuses = response.data;
-        })
-        .catch(error => {
-          console.error('Error fetching marital statuses:', error);
-        });
+      // axios.get('http://localhost:8080/api/marital-statuses')
+      //   .then(response => {
+      //     this.maritalStatuses = response.data;
+      //   })
+      //   .catch(error => {
+      //     console.error('Error fetching marital statuses:', error);
+      //   });
+      this.maritalStatuses = [{maritalStatusId: 1, maritalStatusDescription: "Single"}, {maritalStatusId: 2, maritalStatusDescription: "Married"}]
     },
     fetchVillages() {
-      axios.get('http://localhost:8080/api/villages')
-        .then(response => {
-          this.villages = response.data;
-        })
-        .catch(error => {
-          console.error('Error fetching villages:', error);
-        });
+      // axios.get('http://localhost:8080/api/villages')
+      //   .then(response => {
+      //     this.villages = response.data;
+      //   })
+      //   .catch(error => {
+      //     console.error('Error fetching villages:', error);
+      //   });
+      this.villages = [{villageId: 1, villageName: "village A"}]
     },
     fetchApplicant() {
       if (this.applicantId) {
@@ -135,9 +138,24 @@ export default {
       }
     },
     handleSubmit() {
+      this.xapplicant = {
+        applicationDate: this.applicant.applicationDate,
+        firstName: this.applicant.firstName,
+        middleName: this.applicant.middleName,
+        lastName: this.applicant.lastName,
+        sexId: this.applicant.sex.sexId,
+        age: this.applicant.age,
+        maritalStatusId: this.applicant.maritalStatus.maritalStatusId,
+        idPassportNumber: this.applicant.idPassportNumber,
+        villageId: this.applicant.village.villageId,
+        postalAddress: this.applicant.postalAddress,
+        physicalAddress: this.applicant.physicalAddress,
+        telephoneContacts: this.applicant.telephoneContacts,
+        declaration: this.applicant.declaration
+      };
       const request = this.isEditMode
-        ? axios.put(`http://localhost:8080/api/applicants/${this.applicantId}`, this.applicant)
-        : axios.post('http://localhost:8080/api/applicants', this.applicant);
+        ? axios.put(`http://localhost:8080/api/applicants/${this.applicantId}`, this.xapplicant)
+        : axios.post('http://localhost:8080/api/applicants', this.xapplicant);
 
       request
         .then(() => {
